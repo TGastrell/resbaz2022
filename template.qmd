@@ -1,12 +1,13 @@
 ---
-title: "Your awesome project title"
+title: "Quarto Workshop! RezBaz 2022"
 author:
-  name: "You et al"
-  affiliation: "From whence you hail"
+  name: "Timothy R. Gastrell"
+  affiliation: "Victoria University of Wellington"
 date: today
 bibliography: refs.bib
 format:
   html:
+    toc: true
     code-fold: false
     link-external-newwindow: true
 theme:
@@ -51,6 +52,19 @@ In the template Introduction section take 3-4 minutes to write:
 - remove this callout and render the document and hit the :heavy_check_mark: in zoom
 :::
 
+##  sub-heading
+
+$x = y$
+
+$$
+x = y^2
+$$
+
+@chamberlin1897
+
+- item 1
+  - sub-item
+
 # Libraries {.unnumbered .unlisted}
 
 Generally it is good practice to include a list of packages you use up front. But you may not need to show them in the output or list them in the table of contents. The `{.unnumbered .unlisted}` commands following the heading remove this section from the table of contents but it will remain in the text. Quarto accepts multiple coding languages, the following example uses R. I have set up working R code chunks so that for this tutorial you do not need to be familiar with R. Here, we will experiment with a few code [execution options](https://quarto.org/docs/computations/execution-options.html).
@@ -77,7 +91,10 @@ If you want to use Python code check out the documentation [here](https://quarto
 
 if (!require("pacman")) install.packages("pacman", repos="http://cran.r-project.org")
 pacman::p_load(ggplot2, palmerpenguins)    # Install & load packages
+# Comments are not included in the render!
 ```
+
+`r 7 * 6` 
 
 # Tabsets
 
@@ -91,6 +108,47 @@ pacman::p_load(ggplot2, palmerpenguins)    # Install & load packages
   - Does not matter what they contain but feel free to blurb something in there
 
 - render the document and hit the :heavy_check_mark: in zoom
+:::
+
+:::{.panel-tabset}
+# Code
+```{r tabsetPlot}
+#| echo: true
+if (!require("pacman")) install.packages("pacman", repos="http://cran.r-project.org")
+pacman::p_load(ggplot2, palmerpenguins)    # Install & load packages
+# From: https://allisonhorst.github.io/palmerpenguins/articles/examples.html
+mass_flipper <- ggplot(data = penguins,
+                       aes(x = flipper_length_mm,
+                           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species),
+             size = 3,
+             alpha = 0.8) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Flipper length (mm)",
+       y = "Body mass (g)",
+       color = "Penguin species",
+       shape = "Penguin species") +
+  theme_minimal() +
+  theme(legend.position = c(0.2, 0.7),
+        plot.title.position = "plot",
+)
+```
+
+# Data
+```{r}
+rmarkdown::paged_table(penguins[1:50,])
+```
+
+# Plot
+```{r}
+#| warning: false
+#| fig-cap: Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins from [Allison Horst](https://allisonhorst.github.io/palmerpenguins/articles/examples.html)
+#| fig-alt: Plot of penguin bill length against body mass by species
+#| fig-width: 12
+#| fig-height: 10
+mass_flipper
+```
 :::
 
 # Images
